@@ -1,0 +1,26 @@
+{
+  "name": "satellite-stream",
+  "version": "1.0.0",
+  "description": "A readable stream with satellite location data",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run unit-test && npm run lint",
+    "unit-test": "mocha",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/billyham/satellite-stream.git"
+  },
+  "author": "Dave Hanagan",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.4.0",
+    "mocha": "^3.0.2"
+  }
+}
