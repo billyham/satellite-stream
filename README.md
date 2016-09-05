@@ -16,13 +16,42 @@ const rateAsSeconds = 1;
 let readableStream = satelliteStream(id, rateAsSeconds);
 ```
 
-## API
+When invoking the stream's 'data' event listener, the stream will return location information as JSON objects. An example with keys and sample values:
 ```javascript
-let stream = satelliteStream(id, rate) -> Stream
+{
+    "name": "iss",
+    "id": 25544,
+    "latitude": 50.11496269845,
+    "longitude": 118.07900427317,
+    "altitude": 408.05526028199,
+    "velocity": 27635.971970874,
+    "visibility": "daylight",
+    "footprint": 4446.1877699772,
+    "timestamp": 1364069476,
+    "daynum": 2456375.3411574,
+    "solar_lat": 1.3327003598631,
+    "solar_lon": 238.78610691196,
+    "units": "kilometers"
+}
 ```
- - `id`: integer identifying the satellite
- - `rate`: integer, interval between stream updates
- Returns a readable stream.
+
+
+## API  
+
+```javascript
+let stream = satelliteStream(id, [rate, options]) -> Stream
+```
+
+ - `id`: `<integer>`, identifying the satellite
+ - `rate`: (optional) `<integer>`, interval in seconds between stream updates. Default is 1.
+ - `options`: (optional) `<object>`, passed as the options argument to the parent class constructor: `stream.Readable`. Default is null.
+
+Returns instance of class `Satellite`, a child class of `stream.Readable`
+
+Will return null if `id` is missing of the wrong type.
+
+Will return `{error: 'satellite not found, status: 404'}` with incorrect satellite ID.
+
 
 ## Module Tests
 `npm test`

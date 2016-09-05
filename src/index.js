@@ -1,21 +1,42 @@
-const stream = require('stream');
-const location = require('./location');
+const Readable = require('stream').Readable;
+const locationService = require('./location-service');
 
-module.exports = function(id, rate){
+module.exports = function(id, rate, options){
 
-  class Satellite extends stream.Readable{
-    id(){
-      return id;
+  if (!id) return null;
+  if (typeof id !== 'number') return null;
+
+  class Satellite extends Readable{
+    constructor(id, rate, options) {
+      super(options);
+      this.id = id;
+      this.rate = rate || 1;
+      this.interval = null;
     }
-    rate(){
-      return rate;
+
+    _read(){
+      if (this.interval) return;
+      this.interval = setInterval( () => {
+        this._stream( data => {
+          let buf = Buffer.from(data);
+          this.push(buf);
+        });
+      }, this.rate * 1000);
     }
-    stream(callback){
-      location.id('25544', (err, data) => {
+
+    _stream(callback){
+      locationService.id(this.id, (err, data) => {
         callback(data);
       });
     }
+
+    // TODO: override pause and resume functions to stop and restart the location interval calls
+
+    end(){
+      clearInterval(this.interval);
+      this.push(null);
+    }
   }
 
-  return new Satellite(id, rate);
+  return new Satellite(id, rate, options);
 };
