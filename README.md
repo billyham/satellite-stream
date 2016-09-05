@@ -11,7 +11,7 @@ A stream of satellite location data from whereistheiss.at API.
 ```javascript
 const satelliteStream = require('satellite-stream');
 
-const id = '25544';
+const id = 25544;
 const rateAsSeconds = 1;
 let readableStream = satelliteStream(id, rateAsSeconds);
 ```

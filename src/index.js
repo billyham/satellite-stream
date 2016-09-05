@@ -19,6 +19,7 @@ module.exports = function(id, rate, options){
       this.interval = setInterval( () => {
         this._stream( data => {
           let buf = Buffer.from(data);
+          // TODO: is push returns false, stop the interval
           this.push(buf);
         });
       }, this.rate * 1000);
@@ -34,6 +35,7 @@ module.exports = function(id, rate, options){
 
     end(){
       clearInterval(this.interval);
+      this.interval = null;
       this.push(null);
     }
   }

@@ -46,6 +46,7 @@ describe('module golden path', () => {
     });
     satStream.end();
   });
+
 });
 
 describe('module error handling', () => {
