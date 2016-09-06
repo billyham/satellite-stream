@@ -48,32 +48,40 @@ When invoking the stream's 'data' event listener, the stream will return locatio
 }
 ```
 
+
 ## API  
 
 ```javascript
 satelliteStream(id[, rate, options]) -> readableStream
 ```
 
- - `id <string>` is the ID of the satellite. Currently ISS is the only tracked satellite. It's ID is 25544.
- - `rate <integer>` (optional) is the interval in seconds between stream updates. Default is 1.
+ - `id <string>` is the ID of the satellite. Currently ISS is the only tracked satellite. Its ID is 25544.
+ - `rate <integer>` (optional) is the interval in seconds between stream updates. Default (and the minimum) is 1.
  - `options <object>` (optional) is the optional arguments to the parent class constructor: `stream.Readable`. Default is null.
 
 Returns instance of class `Satellite`, a sub class of `stream.Readable`
 
 Will return null if `id` is missing or the wrong type.
 
-Will return `{ error: 'satellite not found, status: 404' }` with incorrect satellite ID.
+Will return an error object with incorrect satellite ID.
+```javascript
+{ error: 'satellite not found', status: 404 }
+```
 
 
 ## Module Tests
 The module includes tests using Chai, Eslint and the Mocha test runner.
 
+```javascript
+npm test
+```
+
+
 ## Known Issues
  - The URL for connecting to the satellite data API is hard-coded as:  `https://api.wheretheiss.at/v1/satellites`.
 
-`npm test`
 
- ## ISC License
+## ISC License
 
  Copyright (c) 2016, Dave Hanagan
 
