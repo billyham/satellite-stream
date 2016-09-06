@@ -4,25 +4,31 @@ const locationService = require('./location-service');
 module.exports = function(id, rate, options){
 
   if (!id) return null;
-  if (typeof id !== 'number') return null;
+  if (typeof id !== 'string') return null;
+
+  var _interval = null;
 
   class Satellite extends Readable{
-    constructor(id, rate, options) {
-      super(options);
-      this.id = id;
-      this.rate = rate || 1;
-      this.interval = null;
+    constructor(_id, _rate, _options) {
+      super(_options);
+      this.id = _id;
+      this.rate = _rate || 1;
+      this.stopped = false;
     }
 
     _read(){
-      if (this.interval) return;
-      this.interval = setInterval( () => {
+      if (_interval) return;
+      _interval = setInterval( () => {
         this._stream( data => {
           let buf = Buffer.from(data);
-          // TODO: is push returns false, stop the interval
           this.push(buf);
+
+          // Cancel the interval if no listeners exist
+          const listenerCount = this.listeners('data').length;
+          if (listenerCount === 0) this._end();
         });
       }, this.rate * 1000);
+
     }
 
     _stream(callback){
@@ -31,12 +37,11 @@ module.exports = function(id, rate, options){
       });
     }
 
-    // TODO: override pause and resume functions to stop and restart the location interval calls
-
-    end(){
-      clearInterval(this.interval);
-      this.interval = null;
+    _end(){
+      clearInterval(_interval);
+      _interval = null;
       this.push(null);
+      this.stopped = true;
     }
   }
 

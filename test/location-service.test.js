@@ -5,7 +5,7 @@ const assert = chai.assert;
 
 chai.use(chaiHttp);
 
-const satelliteId = 25544;
+const satelliteId = '25544';
 
 describe('locationService golden path', ()=> {
 
@@ -19,7 +19,7 @@ describe('locationService golden path', ()=> {
   });
 });
 
-describe('locationService error handling', () => {
+describe('locationService edge cases', () => {
 
   it('returns 404 "satellite not found" error with incorrect ID', function(done){
     this.timeout(10000);

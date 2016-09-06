@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/billyham/satellite-stream.svg?branch=master)](https://travis-ci.org/billyham/satellite-stream)
+
 # satellite-stream
 
 A stream of satellite location data from whereistheiss.at API.
@@ -11,7 +13,7 @@ A stream of satellite location data from whereistheiss.at API.
 ```javascript
 const satelliteStream = require('satellite-stream');
 
-const id = 25544;
+const id = '25544;'
 const rateAsSeconds = 1;
 let readableStream = satelliteStream(id, rateAsSeconds);
 ```
@@ -42,7 +44,7 @@ When invoking the stream's 'data' event listener, the stream will return locatio
 let stream = satelliteStream(id, [rate, options]) -> Stream
 ```
 
- - `id`: `<integer>`, identifying the satellite
+ - `id`: `<string>`, identifying the satellite
  - `rate`: (optional) `<integer>`, interval in seconds between stream updates. Default is 1.
  - `options`: (optional) `<object>`, passed as the options argument to the parent class constructor: `stream.Readable`. Default is null.
 

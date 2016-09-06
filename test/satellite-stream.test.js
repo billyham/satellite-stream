@@ -11,7 +11,7 @@ describe('module golden path', () => {
   let satStream = null;
 
   before( () => {
-    satStream = satelliteStream(25544, 1);
+    satStream = satelliteStream('25544', 1);
   });
 
   it('creates a Readable stream', () => {
@@ -44,12 +44,12 @@ describe('module golden path', () => {
       assert.ok(true);
       done();
     });
-    satStream.end();
+    satStream._end();
   });
 
 });
 
-describe('module error handling', () => {
+describe('module edge cases', () => {
 
   let satStreamIdMissing = null;
   let satStreamIdWrongType = null;
@@ -61,13 +61,13 @@ describe('module error handling', () => {
   });
 
   it ('returns null with incorrect ID type', () => {
-    satStreamIdWrongType = satelliteStream('wrongType');
+    satStreamIdWrongType = satelliteStream(25544);
     assert.isNull(satStreamIdWrongType);
   });
 
   it ('returns 404 "satellite not found" error object with incorrect satellite id', function(done){
     this.timeout(10000);
-    satStreamWrongId = satelliteStream(123);
+    satStreamWrongId = satelliteStream('wrongid');
     satStreamWrongId.on('data', chunk => {
       const chunkObj = JSON.parse(chunk);
       assert.equal(chunkObj.status, 404);
