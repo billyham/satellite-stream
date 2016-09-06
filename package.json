@@ -1,6 +1,6 @@
 {
   "name": "satellite-stream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A readable stream with satellite location data",
   "main": "src/index.js",
   "directories": {
